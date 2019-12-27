@@ -1,0 +1,17 @@
+export const GET_ERRORS = "GET_ERRORS";
+export const USER_LOADING = "USER_LOADING";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+
+
+export const USER_ADD = "USER_ADD";
+export const USER_UPDATE = "USER_UPDATE";
+
+export const SET_CURRENT_CATEGORY = "SET_CURRENT_CATEGORY";
+export const CATEGORY_LOADING = "CATEGORY_LOADING";
+export const CATEGORY_ADD = "CATEGORY_ADD";
+export const CATEGORY_UPDATE = "CATEGORY_UPDATE";
+
+export const SET_CURRENT_ITEM = "SET_CURRENT_ITEM";
+export const ITEM_LOADING = "ITEM_LOADING";
+export const ITEM_ADD = "ITEM_ADD";
+export const ITEM_UPDATE = "ITEM_UPDATE";
