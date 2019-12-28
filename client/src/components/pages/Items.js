@@ -73,9 +73,10 @@ class Items extends Component {
                 align: "left",
                 sortable: true,
                 cell: record => {
+                    let a = record['sound'].split('-')[2]
                     return (
                         <Fragment>
-                            <a href={record['sound']}>Item sound</a>
+                            <a href={record['sound']}>{a}</a>
                         </Fragment>
                         )
                 }

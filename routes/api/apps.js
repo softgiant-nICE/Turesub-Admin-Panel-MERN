@@ -113,6 +113,8 @@ router.get('/get_notification', hasToken, (req, res, next) => {
                         message: updates[i].message,
                     }
                     await data.notifications.push(single_notification)
+                    await updates[i].tokens.push({token: req.headers.token})
+                    await updates[i].save()
                     // await Update.findOne({_id: updates[i]._id}).updateOne({}, {is_sent: true})
                 }
                 return res.status(200).send(data)
@@ -132,11 +134,8 @@ router.get('/get_notification', hasToken, (req, res, next) => {
                         message: updates[i].message,
                     }
                     await data.notifications.push(single_notification)
-                    // await updates[i].tokens.pull({token: req.headers.token})
-                    // await updates[i].save()
                     // await Update.findOne({_id: updates[i]._id}).updateOne({}, {is_sent: true})
                 }
-                await Update.updateMany({$pull:{ tokens: {token: req.headers.token}}})
                 return res.status(200).send(data)
             } )
         }
@@ -144,16 +143,18 @@ router.get('/get_notification', hasToken, (req, res, next) => {
 })
 
 router.post('/update_data', hasToken, (req, res, next) => {
+    console.log('req.body._id')
     console.log(req.body._id)
-    Update.findOne({_id: req.body._id}).select(['-message', '-id', '-__v']).then( async (update) => {
+    Update.findOne({_id: req.body._id, 'tokens.token': req.headers.token}).select(['-message', '-id', '-__v', '-tokens']).then( async (update) => {
         if (update) {
-            await update.delete()
+            // await update.delete()
+            await Update.findOneAndUpdate({_id: req.body._id}, {$pull:{ tokens: {token: req.headers.token}}})
             return res.status(200).send(update)
         } else {
             let data = {
                 is_success: true,
                 errorMessage: 'Not found update data',
-                state: -1, 
+                state: -1,
             }
             return res.status(200).send(data)
         }
